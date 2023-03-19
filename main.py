@@ -5,6 +5,8 @@ import numpy as np
 
 from macd import calculate_macd, calculate_signal
 
+plt.rcParams['backend'] = 'Qt5Agg'
+
 SOURCE_FILENAME = 'data.csv'
 RESULT_FILENAME = 'plot.jpg'
 
@@ -36,3 +38,4 @@ ax2.plot(dates, signal, color='b', label='Signal')
 ax2.legend(loc='best')
 
 plt.savefig(RESULT_FILENAME, dpi=600)
+plt.show()

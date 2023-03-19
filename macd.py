@@ -13,16 +13,16 @@ def ema(today, prev: np.ndarray):
 
 def calculate_macd(prices: np.ndarray, slow_period, fast_period):
     macd = np.full_like(prices, np.nan)
-    for i, value in enumerate(prices[:-fast_period]):
+    for i, val in enumerate(prices[:-fast_period]):
         np.append(macd, [i])
-        slow_ema = ema(value, prices[i + 1:i + 1 + slow_period])
-        fast_ema = ema(value, prices[i + 1:i + 1 + fast_period])
+        slow_ema = ema(val, prices[i + 1:i + 1 + slow_period])
+        fast_ema = ema(val, prices[i + 1:i + 1 + fast_period])
         macd[i] = slow_ema - fast_ema
     return macd
 
 
 def calculate_signal(macd: np.ndarray, period):
     signal = np.full_like(macd, np.nan)
-    for i, value in enumerate(macd[:-period]):
-        signal[i] = ema(value, macd[i + 1:i + 1 + period])
+    for i, val in enumerate(macd[:-period]):
+        signal[i] = ema(val, macd[i + 1:i + 1 + period])
     return signal
