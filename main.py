@@ -6,6 +6,7 @@ import numpy as np
 from macd import calculate_macd, calculate_signal
 
 plt.rcParams['backend'] = 'Qt5Agg'
+plt.rcParams['lines.linewidth'] = 1
 
 SOURCE_FILENAME = 'data.csv'
 RESULT_FILENAME = 'plot.jpg'
@@ -27,14 +28,15 @@ prices = np.loadtxt(SOURCE_FILENAME, dtype=float, delimiter=',',
 macd = calculate_macd(prices, 12, 26)
 signal = calculate_signal(macd, 9)
 
-fig1, ax1 = plt.subplots()
-ax2 = ax1.twinx()
+fig, (ax1, ax2) = plt.subplots(2, layout='constrained')
 
-ax1.plot(dates, prices, color='g', label='Price $')
+ax1.plot(dates, prices, color='tab:purple', label='Price')
+ax1.set_xlabel('Date')
 ax1.legend(loc='best')
 
-ax2.plot(dates, macd, color='r', label='MACD')
-ax2.plot(dates, signal, color='b', label='Signal')
+ax2.plot(dates, macd, color='tab:blue', label='MACD')
+ax2.plot(dates, signal, color='tab:green', label='Signal')
+ax2.set_xlabel('Date')
 ax2.legend(loc='best')
 
 plt.savefig(RESULT_FILENAME, dpi=600)
