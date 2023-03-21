@@ -28,7 +28,7 @@ prices = np.loadtxt(SOURCE_FILENAME, dtype=float, delimiter=',',
 macd = calculate_macd(prices, 12, 26)
 signal = calculate_signal(macd, 9)
 
-fig, (ax1, ax2) = plt.subplots(2, layout='constrained')
+fig, (ax1, ax2) = plt.subplots(2, layout='constrained', sharex=True)
 
 ax1.plot(dates, prices, color='tab:purple', label='Price')
 ax1.set_xlabel('Date')
