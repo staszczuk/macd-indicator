@@ -11,13 +11,13 @@ def calculate_ema(today, prev: np.ndarray):
     return numerator / denominator
 
 
-def calculate_macd(prices: np.ndarray, slow_period, fast_period):
+def calculate_macd(prices: np.ndarray, short_period, long_period):
     macd = np.full_like(prices, np.nan)
-    for i, val in enumerate(prices[:-fast_period]):
+    for i, val in enumerate(prices[:-long_period]):
         np.append(macd, [i])
-        slow_ema = calculate_ema(val, prices[i + 1:i + 1 + slow_period])
-        fast_ema = calculate_ema(val, prices[i + 1:i + 1 + fast_period])
-        macd[i] = slow_ema - fast_ema
+        short_ema = calculate_ema(val, prices[i + 1:i + 1 + short_period])
+        long_ema = calculate_ema(val, prices[i + 1:i + 1 + long_period])
+        macd[i] = short_ema - long_ema
     return macd
 
 
