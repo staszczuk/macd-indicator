@@ -14,7 +14,6 @@ def calculate_ema(today, prev: np.ndarray):
 def calculate_macd(prices: np.ndarray, short_period, long_period):
     macd = np.full_like(prices, np.nan)
     for i, val in enumerate(prices[:-long_period]):
-        np.append(macd, [i])
         short_ema = calculate_ema(val, prices[i + 1:i + 1 + short_period])
         long_ema = calculate_ema(val, prices[i + 1:i + 1 + long_period])
         macd[i] = short_ema - long_ema
