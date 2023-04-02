@@ -31,12 +31,16 @@ signal = calculate_signal(macd, 9)
 fig, (ax1, ax2) = plt.subplots(2, layout='constrained', sharex=True)
 
 ax1.plot(dates, prices, color='tab:purple', label='Price')
+ax1.set_title('Stock price')
 ax1.set_xlabel('Date')
+ax1.set_ylabel('Price')
 ax1.legend(loc='best')
 
 ax2.plot(dates, macd, color='tab:blue', label='MACD')
 ax2.plot(dates, signal, color='tab:green', label='Signal')
+ax2.set_title('MACD indicator')
 ax2.set_xlabel('Date')
+ax2.set_ylabel('Value')
 ax2.legend(loc='best')
 
 plt.savefig(RESULT_FILENAME, dpi=600)
