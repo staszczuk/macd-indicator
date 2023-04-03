@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import helpers
-from macd import calculate_macd, calculate_signal, find_crosses
+import core
 
 plt.rcParams["backend"] = "Qt5Agg"
 plt.rcParams["lines.linewidth"] = 1
@@ -12,6 +12,7 @@ plt.rcParams["lines.linewidth"] = 1
 SOURCE_FILENAME = "data.csv"
 RESULT_FILENAME = "plot.jpg"
 
+# load data from csv file
 
 dates = np.loadtxt(
     SOURCE_FILENAME,
@@ -31,9 +32,13 @@ prices = np.loadtxt(
     usecols=1,
 )
 
-macd = calculate_macd(prices, 12, 26)
-signal = calculate_signal(macd, 9)
-(crosses_from_below, crosses_from_above) = find_crosses(macd, signal)
+# calculate indicators
+
+macd = core.calc_macd(prices, 12, 26)
+signal = core.cal_signal(macd, 9)
+(buy_signals, sell_signals) = core.find_crosses(macd, signal)
+
+# plot data
 
 fig, (ax1, ax2) = plt.subplots(2, layout="constrained", sharex=True)
 
@@ -45,8 +50,8 @@ ax1.legend(loc="best")
 
 ax2.plot(dates, macd, c="tab:blue", label="MACD")
 ax2.plot(dates, signal, c="tab:orange", label="Signal")
-ax2.plot(dates, crosses_from_below, marker=".", c="tab:green")
-ax2.plot(dates, crosses_from_above, marker=".", c="tab:red")
+ax2.plot(dates, buy_signals, marker=".", c="tab:green")
+ax2.plot(dates, sell_signals, marker=".", c="tab:red")
 ax2.set_title("MACD indicator")
 ax2.set_xlabel("Date")
 ax2.set_ylabel("Value")
